@@ -1,42 +1,338 @@
----
-layout: page
-description: "Thinking will not overcome fear but action will."
----
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="expires" content="Sun, 23 Feb 2020 12:16:08" />
+        <title>#DRIVE - An Endless Driving Video Game</title>
+        <link rel="canonical" href="https://www.drive.game/">
+        <link rel="Stylesheet" href="static/css/bootstrap-reboot.min.css" type="text/css" />
+        <link rel="Stylesheet" href="static/css/bootstrap-grid.min.css" type="text/css" />
+        <link rel="Stylesheet" href="static/css/bootstrap-xl-xxl.min.css" type="text/css" />
+        <link rel="Stylesheet" href="static/css/style.min.css" type="text/css" />
+        <link rel="Stylesheet" href="static/css/jquery.fancybox.css" type="text/css" />
+        
+        <link href="static/css/d8ca62df22294826909c5a5941a31e1c.css" rel="stylesheet"> 
 
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
-            {{ post.title }}
-        </h2>
-        {% if post.subtitle %}
-        <h3 class="post-subtitle">
-            {{ post.subtitle }}
-        </h3>
-        {% endif %}
-        <div class="post-content-preview">
-            {{ post.content | strip_html | truncate:200 }}
+        <meta itemprop="name" content="https://www.drive.game/">
+        <meta itemprop="description" content="#DRIVE - An Endless Driving Video Game">
+        <meta itemprop="image" content="https://www.drive.game/images/share.jpg">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:url" content="https://www.drive.game/">
+        <meta name="twitter:title" content="#DRIVE - An Endless Driving Video Game">
+        <meta name="twitter:description" content="#DRIVE - An Endless Driving Video Game">
+        <meta name="twitter:image" content="https://www.drive.game/images/share.jpg">
+
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="https://www.drive.game/"/>
+        <meta property="og:title" content="#DRIVE - An Endless Driving Video Game"/>
+        <meta property="og:image" content="https://www.drive.game/images/share.jpg"/>
+        <meta property="og:site_name" content="#DRIVE - An Endless Driving Video Game"/>
+        <meta property="og:description" content="#DRIVE - An Endless Driving Video Game"/>
+
+        <meta name="description" content="#DRIVE - An Endless Driving Video Game" /> 
+        <meta name="keywords" content="drive, hashtag, android, ios" />
+
+        <meta name="theme-color" content="#141414" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+        <script src="static/js/jquery-1.12.0.min.js"></script>
+        <script src="static/js/jquery.mobile.custom.min.js"></script>
+        <script src="static/js/jquery.fancybox.js"></script>
+        <script type="text/javascript">
+            var windowAnimation = false;
+            var windowHistory = true;
+            var id = "home";
+            var url = "/";
+            var html5 = false;
+            if (history.pushState)
+                html5 = true;
+            var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
+            var isSafari = false;
+            var touchStartTime = Date.now();
+            if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                isSafari = true;
+            }
+            $(document).ready(function(){
+                if(iOS){
+                    $('body').on('touchstart', function(e) {
+                        touchStartTime = Date.now();
+                    });
+                    $('a').not("*[data-goto]").on('touchend', function(e) {
+                        if((Date.now() - touchStartTime > 350) || $(this).hasA)
+                            return;
+                        var el = $(this);
+                        var link = el.attr('href');
+                        window.location = link;
+                    });
+                }
+                if(html5){
+                    if(windowHistory)
+                        window.history.replaceState({id: id}, "", url);
+                    if(id != "home" && $("#"+id).length > 0){
+                        windowAnimation = true;
+                        $('html, body').animate({
+                            scrollTop: $("#"+id).offset().top
+                        }, 1500, function(){ windowAnimation = false; });
+                    }
+                    if(windowHistory){
+                        window.onpopstate = function(event) {
+                            var newID;
+                            if(!event.state || event.state.id == "")
+                                newID = "home";
+                            else
+                                newID = event.state.id;
+                            if($("#" + newID).length > 0){
+                                id = newID;
+                                windowAnimation = true;
+                                $('html, body').animate({
+                                    scrollTop: $("#" + newID).offset().top
+                                }, 1500, function(){ windowAnimation = false; });
+                            }
+                        };
+                    }
+                }
+                if(iOS){
+                    $("*[data-goto]").on("touchend", function(e){
+                        if(Date.now() - touchStartTime > 350)
+                            return;
+                        e.preventDefault();
+                        var address = $(this).attr("href");                
+                        var newID = $(this).data("goto");
+                        if($("#" + newID).length > 0){
+                            if(html5 && windowHistory)
+                                window.history.pushState({id: newID}, "", address);
+                            id = newID;
+                            windowAnimation = true;
+                            $('html, body').animate({
+                                scrollTop: $("#" + newID).offset().top
+                            }, 1500, function(){ windowAnimation = false; });
+                        }
+                    });
+                }
+                $("*[data-goto]").on("click", function(e){
+                    e.preventDefault();
+                    var address = $(this).attr("href");                
+                    var newID = $(this).data("goto");
+                    if($("#" + newID).length > 0){
+                        if(html5 && windowHistory)
+                            window.history.pushState({id: newID}, "", address);
+                        id = newID;
+                        windowAnimation = true;
+                        $('html, body').animate({
+                            scrollTop: $("#" + newID).offset().top
+                        }, 1500, function(){ windowAnimation = false; });
+                    }
+                });
+                setInterval(function(){ linkCheck() }, 50);
+                function linkCheck() {
+                    if(!windowAnimation){
+                        $(".checkIt").each(function(i){
+                            var top = $(this).offset().top - $(window).scrollTop();
+                            if(top < 200 && top > -100 && id != $(this).attr("id")){
+                                id = $(this).attr("id");
+                                var newURL = $(this).data("url");
+                                if(html5 && windowHistory)
+                                    window.history.pushState({id: id}, "", newURL);
+                            }
+                        });
+                    }
+                }
+                $(".img-box").fancybox();
+            });
+            
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            window.addEventListener('resize', () => {
+              let vh = window.innerHeight * 0.01;
+              document.documentElement.style.setProperty('--vh', `${vh}px`);
+            });
+        </script>
+        
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "VideoGame",
+                "publisher": "Pixel Perfect Dude",
+                "name": "#DRIVE",
+                "description": "#DRIVE is an endless driving videogame inspired by road and action movies from 70s and 80s. As simple as possible, allowing the player to pick a car, pick the place and just hit the road. Just be aware not to hit anything else.",
+                "genre": [
+                    "Racing",
+                    "Arcade"
+                ],
+                "gamePlatform": [
+                    "Mobile"
+                ],
+                "operatingSystem": [
+                    "Android",
+                    "iOS"
+                ],
+                "applicationCategory": [
+                    "Game"
+                ],
+                "playMode": "SinglePlayer",
+                "url": "https://www.drive.game/",
+                "image": "https://www.drive.game/images/screenshot_promo.jpg",
+                "screenshot": "https://www.drive.game/images/screenshot_desert.jpg",
+                "sameAs": [
+                    "https://play.google.com/store/apps/details?id=com.pixelperfectdude.htdrive",
+                    "https://www.youtube.com/channel/UCWTrv1lPxlgx-_nYpVA5D2Q"
+                ],
+                "trailer": {
+                    "@type": "VideoObject",
+                    "url": "https://www.youtube.com/watch?v=fhrIH6gir04",
+                    "inLanguage": "en",
+                    "name": "#DRIVE - Gameplay Trailer (Android)",
+                    "description": "Available now on Google Play. Free to play!",
+                    "uploadDate": "Mar 28, 2019",
+                    "thumbnailUrl": "https://www.drive.game/images/gameplay_cover.png"
+                },
+                "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.6",
+                    "reviewCount": "22400"
+                },
+                "gameLocation": [
+                    "Dry Crumbs",
+                    "Snowplough",
+                    "Holzberg",
+                    "Tofuyama"
+                ],
+                "offers": {
+                    "@type": "AggregateOffer",
+                    "lowPrice": "3.49",
+                    "highPrice": "3.99",
+                    "priceCurrency": "USD"
+                }
+            }
+        </script>
+        
+    </head>
+    <body>
+        <div class="checkIt" id="home" data-url="/">
+            <div class="fullscreen-bg">
+                <video loop autoplay muted poster="" class="fullscreen-bg-video" id="bgVideo">
+                    <source src="/images/drive_trailer_clean_LD_1080.mp4" type="video/mp4">
+                </video>
+                <div class="fullscreen-bg-overlay"></div>
+            </div>
+            <img src="static/picture/slogan.svg" id="slogan" alt="">
+            <div id="logo">
+                <img src="static/picture/logo.svg" alt="">
+            </div>
+            <div id="horizontal"></div>
+            <div id="vertical"></div>
+            <div class="container" id="top-menu">
+                <div class="row">
+                    <div class="col-12 text-right">
+                        <a href="/about" data-goto="about">About</a>
+                        <a href="/gameplay" data-goto="gameplay">Gameplay</a>
+                        <a href="/press-kit"><img src="static/picture/newspaper.svg" alt="Press Kit"></a>
+                        <a href="https://www.facebook.com/DRIVE.GAME" target="_blank"><img src="static/picture/facebook.svg" alt="#DRIVE facebook page"></a>
+                        <a href="https://twitter.com/drivethegame" target="_blank"><img src="static/picture/twitter.svg" alt="#DRIVE twitter"></a>
+                    </div>
+                </div>
+            </div>
+            <img src="static/picture/mouse.gif" alt="Scroll down" id="mouse">
         </div>
-    </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
-</div>
-<hr>
-{% endfor %}
-
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
-<ul class="pager">
-    {% if paginator.previous_page %}
-    <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-    </li>
-    {% endif %}
-    {% if paginator.next_page %}
-    <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-    </li>
-    {% endif %}
-</ul>
-{% endif %}
+        <div class="container checkIt" id="about" data-url="/about">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <img src="static/picture/icon.png" alt="Hoverion" class="hoverion">
+                </div>
+                <div class="col-12 col-lg-8 offset-lg-2">
+                    <h1 class="text-center">FreeRacingGame</h1>
+                    <p class="text-center">
+                        #DRIVE is an endless driving videogame inspired by road and action movies from 70s and 80s. As simple as possible, allowing the player to pick a car, pick the place and just hit the road. Just be aware not to hit anything else.
+                    </p>                    
+                    <p class="text-center">
+                        <a href="https://play.google.com/store/apps/details?id=com.pixelperfectdude.htdrive" target="_blank" class="store-link"><img src="static/picture/google-play-white.png" alt="#DRIVE - Android"></a>
+                        <a href="https://itunes.apple.com/us/app/drive/id1366180154" class="store-link"><img src="static/picture/app-store-white.png" alt="#DRIVE - iOS"></a>
+                    </p>
+                </div>
+            </div>
+            <div class="row break-clear"></div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <iframe class="yt-centered" src="https://www.youtube.com/embed/Xciy2_Rj9kQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid checkIt" id="gameplay" data-url="/gameplay">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-6 text-center">
+                        <img src="static/picture/dehoverion.png" alt="Hoverion" class="hoverion">
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <h1 class="text-black">
+                            #DRIVE iconic cars
+                        </h1>
+                        <p>
+                            #DRIVE is an endless driving videogame inspired by road and action movies from 70s and 80s. As simple as possible, allowing the player to pick a car, pick the place and just hit the road. Just be aware not to hit anything else. No matter where we drive, no matter what we drive or how fast we drive. We simply chose to drive. And you?
+                        </p>
+                    </div>
+                </div>
+                <div class="row break-clear"></div>
+                <div class="row">
+                    <div class="col-12 col-lg-6 text-center">
+                        <iframe class="yt-centered" src="https://www.youtube.com/embed/fhrIH6gir04" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-12 col-lg-6 text-center">
+                        <div class="gallery-box">
+                            <a href="/images/screenshot_desert.jpg" rel="screens" class="img-box">
+                                <img src="static/picture/screenshot_desert_512.jpg" alt="Dry Crumbs screenshot">
+                            </a>
+                            <a href="/images/screenshot_snow.jpg" rel="screens" class="img-box">
+                                <img src="static/picture/screenshot_snow_512.jpg" alt="Snowplough screenshot">
+                            </a>
+                            <a href="/images/screenshot_forest.jpg" rel="screens" class="img-box">
+                                <img src="static/picture/screenshot_forest_512.jpg" alt="Holzberg screenshot">
+                            </a>
+                            <a href="/images/screenshot_japan.jpg" rel="screens" class="img-box">
+                                <img src="static/picture/screenshot_japan_512.jpg" alt="Tofuyama screenshot">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row break-clear"></div>
+                <div class="row">
+                    <div class="col-12 text-center">       
+                        <img src="static/picture/logo_grey.svg" class="logo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">                  
+                        <p class="text-center">
+                            <a href="https://play.google.com/store/apps/details?id=com.pixelperfectdude.htdrive" target="_blank" class="store-link"><img src="static/picture/google-play-grey.png" alt="#DRIVE - Android"></a>
+                            <a href="https://itunes.apple.com/us/app/drive/id1366180154" class="store-link"><img src="static/picture/app-store-grey.png" alt="#DRIVE - iOS"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="container info">
+                <div class="row">
+                    <div class="col-12">                  
+                        <p class="text-center links">
+                            <a href="/about" data-goto="about">About</a>
+                            <a href="/gameplay" data-goto="gameplay">Gameplay</a>
+                            <a href="/press-kit">Press Kit</a>
+                            <a href="/privacy-policy" target="_blank">Privacy Policy</a>
+                            <br>
+                            <a href="https://www.facebook.com/DRIVE.GAME" target="_blank"><img src="static/picture/facebook_grey.svg" alt="#DRIVE facebook page"></a>
+                            <a href="https://twitter.com/drivethegame" target="_blank"><img src="static/picture/twitter_grey.svg" alt="#DRIVE twitter"></a>                           
+                        </p>
+                    </div>
+                </div>
+                <small>Copyright © 2018 <a href="https://www.pixelperfectdude.com" target="_blank">Pixel Perfect Dude</a> & Lionsharp Studios</small>
+            </div>
+        </div>
+        <!--[if gte IE 9]>
+          <style type="text/css">
+            .gradient {
+               filter: none;
+            }
+          </style>
+        <![endif]-->
+    </body>
+</html>
